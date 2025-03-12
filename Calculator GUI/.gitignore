@@ -1,1 +1,12 @@
-/bin/
+# Eclipse ile ilgili dosyalar
+.classpath
+.project
+.settings/
+
+# Derleme ve çıktı klasörleri
+bin/
+target/
+build/
+
+# IDE spesifik dosyalar
+.idea/
