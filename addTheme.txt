@@ -1,0 +1,19 @@
+You need to add the .jar files in "Themes" to;
+	
+	Right Click on Project -> Build Path -> Configure Build Path -> Libraries
+     -> Classpath -> Add External jARs -> Select the Files in "Themes" -> Open
+     -> Apply and Close
+
+Then, change the function name as whatever theme you want in below code block in CalculatorApp.java!
+
+try {
+    UIManager.setLookAndFeel(new FlatDraculaIJTheme());
+} catch (Exception e) {
+    e.printStackTrace();
+}
+
+Then, copy the name of it and paste to the last thing before semicolon in below code block also in CalculatorApp.java
+
+import com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme;
+
+Ta-Daa! Theme is ready, Enjoy!

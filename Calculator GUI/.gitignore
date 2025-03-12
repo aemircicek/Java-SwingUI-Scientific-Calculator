@@ -1,4 +1,4 @@
-# Eclipse ile ilgili dosyalar
+# Eclipse ile ilgili gereksiz dosyalar
 .classpath
 .project
 .settings/
@@ -7,6 +7,3 @@
 bin/
 target/
 build/
-
-# IDE spesifik dosyalar
-.idea/
