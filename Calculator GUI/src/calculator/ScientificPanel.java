@@ -11,7 +11,6 @@ public class ScientificPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     public JButton btnsqr, btnsqroot, btncube, btncuberoot, btndivby1, btnpow, btnyrootx, btnfactorial, btnln, btnlogyx, btnepowx, btntenpowx, btnsin, btncos, btntan, btnabs;
     private DisplayPanel displayPanel;
-    private KeypadPanel keypadPanel;
     
     JButton addTrigonometricButton(String label, Function<Double, Double> trigFunction, int cmnd, int x, int y) {
         JButton button = new JButton(label);
@@ -148,7 +147,6 @@ public class ScientificPanel extends JPanel {
 
     public ScientificPanel(DisplayPanel displayPanel, KeypadPanel keypadPanel) {
         this.displayPanel = displayPanel;
-        this.keypadPanel = keypadPanel;
         setLayout(null);
         
         btnpow = addPowNRootButton("xʸ", 5, 118, 50, 108);

@@ -12,7 +12,6 @@ public class DisplayPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     public static JTextField text;
     public static JTextField field;
-    private JFrame frame;
 
     private void initComponents() {
         setLayout(null);
@@ -47,7 +46,6 @@ public class DisplayPanel extends JPanel {
 
     public DisplayPanel(JFrame frame) {
         this();
-        this.frame = frame;
     }
 
     public JTextField getTextField() {

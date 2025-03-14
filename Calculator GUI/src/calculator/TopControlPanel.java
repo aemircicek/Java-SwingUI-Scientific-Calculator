@@ -13,10 +13,8 @@ public class TopControlPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	JButton btnac, btndel;
-	private DisplayPanel displayPanel;
 
     public TopControlPanel(DisplayPanel displayPanel) {
-    	this.displayPanel = displayPanel;
         setLayout(null);
 
         JButton btnac = new JButton("AC");

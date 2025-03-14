@@ -2,12 +2,9 @@ package calculator;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.function.Function;
 
 public class KeypadPanel extends JPanel {
 
