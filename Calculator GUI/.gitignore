@@ -1,9 +1,52 @@
-# Eclipse ile ilgili gereksiz dosyalar
-.classpath
+# Eclipse IDE
+.metadata/
+*.tmp
+*.bak
+*.swp
+*.swo
+*.swn
+
+# Eclipse project files
 .project
+.classpath
 .settings/
 
-# Derleme ve çıktı klasörleri
+# Java specific
 bin/
 target/
+out/
+*.class
+*.war
+*.ear
+*.jar
+*.log
+
+# Maven
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Gradle
+.gradle/
 build/
+
+# Eclipse Plugin Development
+MANIFEST.MF
+*.generated
+*.gwt.xml
+*.launch
+*.jardesc
+*.wtpmodules
+*~
+Thumbs.db
+.DS_Store
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# MacOS
+.DS_Store
