@@ -110,10 +110,6 @@ public class KeypadPanel extends JPanel {
                                 displayPanel.getField().setText(displayPanel.getField().getText() + (int) number1 + " - ");
                             } else if (label.equals("+")) {
                                 displayPanel.getField().setText(displayPanel.getField().getText() + (int) number1 + " + ");
-                            } else if (label.equals("xʸ")) {
-                                displayPanel.getField().setText(displayPanel.getField().getText() + (int) number1 + " ^ ");
-                            } else if (label.equals("ʸ√x")) {
-                                displayPanel.getField().setText(displayPanel.getField().getText() + (int) number1 + " ^ " + "1 / ");
                             }
                         } else {
                             if (displayPanel.getField().getText().contains("=")) {
@@ -127,10 +123,6 @@ public class KeypadPanel extends JPanel {
                                 displayPanel.getField().setText(displayPanel.getField().getText() + number1 + " - ");
                             } else if (label.equals("+")) {
                                 displayPanel.getField().setText(displayPanel.getField().getText() + number1 + " + ");
-                            } else if (label.equals("xʸ")) {
-                                displayPanel.getField().setText(displayPanel.getField().getText() + number1 + " ^ ");
-                            } else if (label.equals("ʸ√x")) {
-                                displayPanel.getField().setText(displayPanel.getField().getText() + number1 + " ^ " + "1 / ");
                             }
                         }
                         CalculatorLogic.isFirst = false;
@@ -145,8 +137,6 @@ public class KeypadPanel extends JPanel {
                             if (label.equals("÷")) {
                                 displayPanel.getField().setText(displayPanel.getField().getText() + (int) number2 + " / ");
                             } else if (label.equals("*")) {
-                            	
-                            	
                             	if (displayPanel.getField().getText().contains("(") && !displayPanel.getField().getText().contains(")")) {
                             		displayPanel.getField().setText(displayPanel.getField().getText() + (int) number2 + ")" + " * ");
                             	}  else if (displayPanel.getField().getText().contains(")")) {
@@ -154,17 +144,10 @@ public class KeypadPanel extends JPanel {
                             	} else {
                             		displayPanel.getField().setText(displayPanel.getField().getText() + (int) number2 + " * ");
                             	}
-                            	
-                            	
-                            	
                             } else if (label.equals("-")) {
                                 displayPanel.getField().setText(displayPanel.getField().getText() + (int) number2 + " - ");
                             } else if (label.equals("+")) {
                                 displayPanel.getField().setText(displayPanel.getField().getText() + (int) number2 + " + ");
-                            } else if (label.equals("xʸ")) {
-                                displayPanel.getField().setText(displayPanel.getField().getText() + (int) number2 + ")" + " ^ ");
-                            } else if (label.equals("ʸ√x")) {
-                                displayPanel.getField().setText(displayPanel.getField().getText() + "1 / " + (int) number2 + ")" + " ^ " + "1 / ");
                             }
                         } else {
                             if (displayPanel.getField().getText().contains("=")) {
@@ -178,83 +161,6 @@ public class KeypadPanel extends JPanel {
                                 displayPanel.getField().setText(displayPanel.getField().getText() + number2 + " - ");
                             } else if (label.equals("+")) {
                                 displayPanel.getField().setText(displayPanel.getField().getText() + number2 + " + ");
-                            } else if (label.equals("xʸ")) {
-                                displayPanel.getField().setText(displayPanel.getField().getText() + number2+ " ^ ");
-                            } else if (label.equals("ʸ√x")) {
-                                displayPanel.getField().setText(displayPanel.getField().getText() + number2+ " ^ " + "1 / ");
-                            }
-                        }
-                    }
-                    CalculatorLogic.command = cmnd;
-                }
-            }
-        });
-        add(button);
-        return button;
-    }
-
-    JButton addTrigonometricButton(String label, Function<Double, Double> trigFunction, int cmnd, int x, int y) {
-        JButton button = new JButton(label);
-        button.setFont(new Font("SansSerif", Font.BOLD, 20));
-        button.setBounds(x, y, 108, 39);
-        button.setFocusable(false);
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (displayPanel.getTextField().getText().equals("") || displayPanel.getTextField().getText().equals("Invalid Input!")
-                        || displayPanel.getTextField().getText().equals("Cannot divide by zero!")) {
-                    displayPanel.getTextField().setText("Invalid Input!");
-                    displayPanel.getField().setText("");
-                    CalculatorLogic.isValid = false;
-                } else {
-                    if (!(CalculatorLogic.command == 1 || CalculatorLogic.command == 2 || CalculatorLogic.command == 3 ||
-                          CalculatorLogic.command == 4 || CalculatorLogic.command == 5 || CalculatorLogic.command == 6 ||
-                          CalculatorLogic.command == 7)) {
-                        double number1 = Double.parseDouble(displayPanel.getTextField().getText());
-                        double normalizedAngle = number1 % 360;
-                        if (normalizedAngle < 0) {
-                            normalizedAngle += 360;
-                        }
-                        if (cmnd == 17 && (normalizedAngle == 90 || normalizedAngle == 270)) {
-                            displayPanel.getTextField().setText("Invalid Input!");
-                            displayPanel.getField().setText("");
-                            CalculatorLogic.isValid = false;
-                        } else {
-                            CalculatorLogic.result = trigFunction.apply(Math.toRadians(number1));
-                            if (number1 == Math.floor(number1)) {
-                                displayPanel.getField().setText(label + "(" + (int) number1 + ")" + " =");
-                            } else {
-                                displayPanel.getField().setText(label + "(" + number1 + ")" + " =");
-                            }
-                            if (CalculatorLogic.result == Math.floor(CalculatorLogic.result)) {
-                                displayPanel.getTextField().setText(String.valueOf((int) CalculatorLogic.result));
-                            } else {
-                                displayPanel.getTextField().setText(String.valueOf(CalculatorLogic.result));
-                            }
-                        }
-                    } else {
-                        CalculatorLogic.switchCase();
-                        if (CalculatorLogic.isValid) {
-                            double number2 = Double.parseDouble(displayPanel.getTextField().getText());
-                            double trigResult = trigFunction.apply(Math.toRadians(CalculatorLogic.result));
-                            double normalizedAngle = CalculatorLogic.result % 360;
-                            if (normalizedAngle < 0) {
-                                normalizedAngle += 360;
-                            }
-                            if (cmnd == 17 && (normalizedAngle == 90 || normalizedAngle == 270)) {
-                                displayPanel.getTextField().setText("Invalid Input!");
-                                displayPanel.getField().setText("");
-                                CalculatorLogic.isValid = false;
-                            } else {
-                                if (number2 == Math.floor(number2)) {
-                                    displayPanel.getField().setText(label + "(" + displayPanel.getField().getText() + (int) number2 + ")" + " =");
-                                } else {
-                                    displayPanel.getField().setText(label + "(" + displayPanel.getField().getText() + number2 + ")" + " =");
-                                }
-                                if (trigResult == Math.floor(trigResult)) {
-                                    displayPanel.getTextField().setText(String.valueOf((int) trigResult));
-                                } else {
-                                    displayPanel.getTextField().setText(String.valueOf(trigResult));
-                                }
                             }
                         }
                     }
@@ -335,6 +241,9 @@ public class KeypadPanel extends JPanel {
                     String fieldExpr = displayPanel.getField().getText();
                     String currentNum = displayPanel.getTextField().getText();
                     String expr;
+                    if (fieldExpr.contains("x")) {
+                        fieldExpr = fieldExpr.replace("x", currentNum);
+                    }
                     if (fieldExpr.contains("(") || fieldExpr.contains(")")) {
                         if(currentNum.equals("0") || currentNum.isEmpty()){
                             expr = fieldExpr;
@@ -360,9 +269,6 @@ public class KeypadPanel extends JPanel {
                     CalculatorLogic.command = 0;
                     CalculatorLogic.isFirst = true;
                     CalculatorLogic.isValid = true;
-                    
-                    
-                    
                 }
             }
         });

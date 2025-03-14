@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.function.Function;
 import java.awt.event.ActionEvent;
 
 public class ScientificPanel extends JPanel {
@@ -11,18 +12,151 @@ public class ScientificPanel extends JPanel {
     public JButton btnsqr, btnsqroot, btncube, btncuberoot, btndivby1, btnpow, btnyrootx, btnfactorial, btnln, btnlogyx, btnepowx, btntenpowx, btnsin, btncos, btntan, btnabs;
     private DisplayPanel displayPanel;
     private KeypadPanel keypadPanel;
+    
+    JButton addTrigonometricButton(String label, Function<Double, Double> trigFunction, int cmnd, int x, int y) {
+        JButton button = new JButton(label);
+        button.setFont(new Font("SansSerif", Font.BOLD, 20));
+        button.setBounds(x, y, 108, 39);
+        button.setFocusable(false);
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (displayPanel.getTextField().getText().equals("") || displayPanel.getTextField().getText().equals("Invalid Input!")
+                        || displayPanel.getTextField().getText().equals("Cannot divide by zero!")) {
+                    displayPanel.getTextField().setText("Invalid Input!");
+                    displayPanel.getField().setText("");
+                    CalculatorLogic.isValid = false;
+                } else {
+                    if (!(CalculatorLogic.command == 1 || CalculatorLogic.command == 2 || CalculatorLogic.command == 3 ||
+                          CalculatorLogic.command == 4 || CalculatorLogic.command == 5 || CalculatorLogic.command == 6 ||
+                          CalculatorLogic.command == 7)) {
+                        double number1 = Double.parseDouble(displayPanel.getTextField().getText());
+                        double normalizedAngle = number1 % 360;
+                        if (normalizedAngle < 0) {
+                            normalizedAngle += 360;
+                        }
+                        if (cmnd == 17 && (normalizedAngle == 90 || normalizedAngle == 270)) {
+                            displayPanel.getTextField().setText("Invalid Input!");
+                            displayPanel.getField().setText("");
+                            CalculatorLogic.isValid = false;
+                        } else {
+                            CalculatorLogic.result = trigFunction.apply(Math.toRadians(number1));
+                            if (number1 == Math.floor(number1)) {
+                                displayPanel.getField().setText(label + "(" + (int) number1 + ")" + " =");
+                            } else {
+                                displayPanel.getField().setText(label + "(" + number1 + ")" + " =");
+                            }
+                            if (CalculatorLogic.result == Math.floor(CalculatorLogic.result)) {
+                                displayPanel.getTextField().setText(String.valueOf((int) CalculatorLogic.result));
+                            } else {
+                                displayPanel.getTextField().setText(String.valueOf(CalculatorLogic.result));
+                            }
+                        }
+                    } else {
+                        CalculatorLogic.switchCase();
+                        if (CalculatorLogic.isValid) {
+                            double number2 = Double.parseDouble(displayPanel.getTextField().getText());
+                            double trigResult = trigFunction.apply(Math.toRadians(CalculatorLogic.result));
+                            double normalizedAngle = CalculatorLogic.result % 360;
+                            if (normalizedAngle < 0) {
+                                normalizedAngle += 360;
+                            }
+                            if (cmnd == 17 && (normalizedAngle == 90 || normalizedAngle == 270)) {
+                                displayPanel.getTextField().setText("Invalid Input!");
+                                displayPanel.getField().setText("");
+                                CalculatorLogic.isValid = false;
+                            } else {
+                                if (number2 == Math.floor(number2)) {
+                                    displayPanel.getField().setText(label + "(" + displayPanel.getField().getText() + (int) number2 + ")" + " =");
+                                } else {
+                                    displayPanel.getField().setText(label + "(" + displayPanel.getField().getText() + number2 + ")" + " =");
+                                }
+                                if (trigResult == Math.floor(trigResult)) {
+                                    displayPanel.getTextField().setText(String.valueOf((int) trigResult));
+                                } else {
+                                    displayPanel.getTextField().setText(String.valueOf(trigResult));
+                                }
+                            }
+                        }
+                    }
+                    CalculatorLogic.command = cmnd;
+                }
+            }
+        });
+        add(button);
+        return button;
+    }
+    
+    JButton addPowNRootButton(String label, int cmnd, int x, int y, int z) {
+        JButton button = new JButton(label);
+        button.setFont(new Font("SansSerif", Font.BOLD, 20));
+        button.setBounds(x, y, z, 39);
+        button.setFocusable(false);
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (displayPanel.getTextField().getText().equals("") || displayPanel.getTextField().getText().equals("Invalid Input!")
+                        || displayPanel.getTextField().getText().equals("Cannot divide by zero!")) {
+                    displayPanel.getTextField().setText("Invalid Input!");
+                    displayPanel.getField().setText("");
+                    CalculatorLogic.isValid = false;
+                } else {
+                    if (CalculatorLogic.isFirst) {
+                        double number1 = Double.parseDouble(displayPanel.getTextField().getText());
+                        CalculatorLogic.result = number1;
+                        displayPanel.getTextField().setText("0");
+                        if (number1 == Math.floor(number1)) {
+                            if (displayPanel.getField().getText().contains("=")) {
+                                displayPanel.getField().setText("");
+                            }
+                            if (label.equals("xʸ")) {
+                                displayPanel.getField().setText(displayPanel.getField().getText() + (int) number1 + " ^ ");
+                            } else if (label.equals("ʸ√x")) {
+                                displayPanel.getField().setText(displayPanel.getField().getText() + (int) number1 + " ^ " + "(1 / x)");
+                            }
+                        } else {
+                            if (displayPanel.getField().getText().contains("=")) {
+                                displayPanel.getField().setText("");
+                            }
+                            if (label.equals("xʸ")) {
+                                displayPanel.getField().setText(displayPanel.getField().getText() + number1 + " ^ ");
+                            } else if (label.equals("ʸ√x")) {
+                                displayPanel.getField().setText(displayPanel.getField().getText() + number1 + " ^ " + "(1 / x)");
+                            }
+                        }
+                        CalculatorLogic.isFirst = false;
+                    } else {
+                        double number2 = Double.parseDouble(displayPanel.getTextField().getText());
+                        CalculatorLogic.switchCase();
+                        displayPanel.getTextField().setText("0");
+                        if (number2 == Math.floor(number2)) {
+                            if (displayPanel.getField().getText().contains("=")) {
+                                displayPanel.getField().setText("");
+                            }
+                            if (label.equals("xʸ")) {
+                                displayPanel.getField().setText(displayPanel.getField().getText() + number2+ " ^ ");
+                            } else if (label.equals("ʸ√x")) {
+                                displayPanel.getField().setText(displayPanel.getField().getText() + number2+ " ^ " + "(1 / x)");
+                            }
+                        }
+                    }
+                    CalculatorLogic.command = cmnd;
+                }
+            }
+        });
+        add(button);
+        return button;
+    }
 
     public ScientificPanel(DisplayPanel displayPanel, KeypadPanel keypadPanel) {
         this.displayPanel = displayPanel;
         this.keypadPanel = keypadPanel;
         setLayout(null);
         
-        btnpow = keypadPanel.addOperatorButton("xʸ", 5, 118, 50, 108);
-        btnyrootx = keypadPanel.addOperatorButton("ʸ√x", 6, 236, 50, 108);
+        btnpow = addPowNRootButton("xʸ", 5, 118, 50, 108);
+        btnyrootx = addPowNRootButton("ʸ√x", 6, 236, 50, 108);
         
-        btnsin = keypadPanel.addTrigonometricButton("sin", Math::sin, 15, 0, 150);
-        btncos = keypadPanel.addTrigonometricButton("cos", Math::cos, 16, 118, 150);
-        btntan = keypadPanel.addTrigonometricButton("tan", Math::tan, 17, 236, 150);
+        btnsin = addTrigonometricButton("sin", Math::sin, 15, 0, 150);
+        btncos = addTrigonometricButton("cos", Math::cos, 16, 118, 150);
+        btntan = addTrigonometricButton("tan", Math::tan, 17, 236, 150);
         
         btnsqr = new JButton("x²");
         btnsqr.addActionListener(new ActionListener() {
