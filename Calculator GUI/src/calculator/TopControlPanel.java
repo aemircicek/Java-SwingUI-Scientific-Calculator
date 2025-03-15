@@ -8,16 +8,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class TopControlPanel extends JPanel {
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	JButton btnac, btndel;
 
-    public TopControlPanel(DisplayPanel displayPanel) {
-        setLayout(null);
+	public TopControlPanel(DisplayPanel displayPanel) {
+		setLayout(null);
 
-        JButton btnac = new JButton("AC");
+		JButton btnac = new JButton("AC");
 		btnac.setFont(new Font("SansSerif", Font.BOLD, 20));
 		btnac.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -32,7 +32,7 @@ public class TopControlPanel extends JPanel {
 		btnac.setBounds(0, 0, 89, 35);
 		btnac.setFocusable(false);
 		add(btnac);
-		
+
 		JButton btndel = new JButton("⌫");
 		btndel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -46,12 +46,13 @@ public class TopControlPanel extends JPanel {
 							DisplayPanel.text.setText("0");
 							DisplayPanel.field.setText("");
 						} else {
-							DisplayPanel.text.setText(DisplayPanel.text.getText().substring(0, DisplayPanel.text.getText().length() - 1));
+							DisplayPanel.text.setText(
+									DisplayPanel.text.getText().substring(0, DisplayPanel.text.getText().length() - 1));
 						}
-				    } else {
-				    	DisplayPanel.text.setText("0");
-				    	DisplayPanel.field.setText("");
-				    }
+					} else {
+						DisplayPanel.text.setText("0");
+						DisplayPanel.field.setText("");
+					}
 				}
 			}
 		});
@@ -59,8 +60,7 @@ public class TopControlPanel extends JPanel {
 		btndel.setBounds(0, 41, 89, 35);
 		btndel.setFocusable(false);
 		add(btndel);
-		
-		KeyBindingsUtil.setupKeyBindings(displayPanel, btndel, btnac);
-    }
-}
 
+		KeyBindingsUtil.setupKeyBindings(displayPanel, btndel, btnac);
+	}
+}
